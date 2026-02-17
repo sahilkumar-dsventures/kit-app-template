@@ -1,0 +1,48 @@
+[package]
+title = "My USD Viewer Streaming"
+version = "0.1.0"
+description = "Configuration for streaming deployments of My USD Viewer"
+keywords = ["experience", "app", "dev", "streaming"]
+template_name = "omni.streaming_configuration"
+
+[dependencies]
+"my_company.my_usd_viewer" = {}  # Application kit file
+"omni.kit.livestream.app" = {}  # Livestream extension
+
+[settings.app]
+fastShutdown = true
+name = "My USD Viewer Streaming"  # Application Display Name
+renderer.resolution.height = 1080
+renderer.resolution.width = 1920
+window.height = 1080
+window.width = 1920
+
+[settings]
+rtx.post.aa.op = 3
+rtx.verifyDriverVersion.enabled = false
+
+[settings.app.extensions]
+registryEnabled = true
+supportedTargets.platform = []  # Skip checking supported platform/config when building
+
+exclude = [
+    "omni.kit.developer.bundle",
+    "omni.kit.widget.cache_indicator",
+]
+
+[settings.app.exts]
+folders.'++' = [  # Search paths for extensions.
+    "${app}/../exts",
+    "${app}/../apps",
+    "${app}/../extscache"
+]
+
+[settings.app.file]
+ignoreUnsavedOnExit = true
+
+[settings.app.livestream]
+# These settings help with signaling and NAT traversal
+# Use ws instead of wss if not using SSL certificates
+webrtc.signaling.protocol = "ws"
+# External IP or ngrok address if known, though usually signaling handles this.
+# For now, we focus on letting the client connect via WS.
